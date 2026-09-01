@@ -3,71 +3,63 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>It's Always Been About the Data — Brent Blackmon</title>
-<meta name="description" content="Salesforce and Anthropic just put a CRM inside Claude. The real story is the data underneath it, and what that means for mid-market operations.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<title>It's Always Been About the Data | Brent Blackmon</title>
+<meta name="description" content="Salesforce and Anthropic just put a $300 billion company's CRM inside Claude. The real story is about what's underneath it.">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <div class="name"><a href="index.html" style="color:inherit;border:none;">Brent Blackmon</a></div>
-    <nav class="main">
-      <a href="index.html">Home</a>
-      <a href="writing.html">Writing</a>
-      <a href="work.html">Work</a>
-      <a href="about.html">About</a>
-    </nav>
+<nav class="site-nav"><div class="wrap">
+  <a class="brand" href="index.html"><span class="mark">BB</span>Brent Blackmon</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="writing.html" class="active">Writing</a>
+    <a href="work.html">Work</a>
+    <a href="about.html">About</a>
   </div>
-</header>
+</div></nav>
 
-<div class="wrap">
-  <article class="essay">
-    <div class="meta">August 2026</div>
-    <h1>It's Always Been About the Data</h1>
-    <p class="dek">Salesforce and Anthropic just put a $300 billion company's CRM inside Claude. The headline everyone's writing is about the AI. The real story is about what's underneath it.</p>
+<header class="article-hero"><div class="wrap">
+  <div class="kicker">August 2026</div>
+  <h1>It's Always Been About the Data</h1>
+  <div class="meta">Brent Blackmon</div>
+</div></header>
 
-    <p>On August 26, Salesforce and Anthropic announced Claudeforce, an expanded partnership that puts Claude's reasoning directly on top of Salesforce's customer data, workflows, and governance. You can now point Claude at decades of CRM history and have it reason over live pipeline, automate updates, and take governed action without ever opening the Salesforce app. Dario Amodei put it plainly: companies can point Claude at customer information built in Salesforce for decades and use it to actually run and grow their businesses.</p>
+<article class="body">
+  <p>Salesforce and Anthropic just put a $300 billion company's CRM inside Claude. The headline everyone's writing is about the AI. The real story is about what's underneath it.</p>
 
-    <p>Every AI headline this year has been about the model. Context windows, reasoning benchmarks, which lab shipped what first. Almost none of them have been about the thing that actually determines whether any of it works inside a real company: the data the model gets pointed at.</p>
+  <p>On August 26, Salesforce and Anthropic announced Claudeforce, an expanded partnership that puts Claude's reasoning directly on top of Salesforce's customer data, workflows, and governance. You can now point Claude at decades of CRM history and have it reason over live pipeline, automate updates, and take governed action without ever opening the Salesforce app. Dario Amodei put it plainly: companies can point Claude at customer information built in Salesforce for decades and use it to actually run and grow their businesses.</p>
 
-    <p>That's not a new problem. It's the same problem I've been working on for the last three years, just with better tools now.</p>
+  <p>Every AI headline this year has been about the model. Context windows, reasoning benchmarks, which lab shipped what first. Almost none of them have been about the thing that actually determines whether any of it works inside a real company: the data the model gets pointed at.</p>
 
-    <h2>The layer changes. The constraint doesn't.</h2>
+  <p>That's not a new problem. It's the same problem I've been working on for the last three years, just with better tools now.</p>
 
-    <p>I run strategy for a company that sells ERP software and services to small and medium manufacturers and distributors. Our customers run on ERP systems, Infor Visual, Syteline, Acumatica, that have been collecting operational data for a decade or more. Every one of them has the same thing Salesforce has: years of information about what actually happened in the business, sitting in a system most of their people can't query without help. It's the same story I hear from small and medium businesses outside manufacturing too, just with a different system of record.</p>
+  <h2>The layer changes. The constraint doesn't.</h2>
 
-    <p>The AI layers emerging right now, Claude reasoning over Salesforce data, agents reasoning over ERP data, aren't replacing the hard part. They're removing the last excuse for not doing it. For twenty years, the constraint on getting value out of operational data was access: you needed a report writer, a BI analyst, or a consultant who knew the schema. Now the constraint is gone. The data underneath still has to be trustworthy, structured well enough to reason over, and connected to the processes it's supposed to describe. AI didn't change that requirement. It just made the payoff for meeting it much bigger, and the cost of ignoring it much more visible.</p>
+  <p>I run strategy for a company that sells ERP software and services to small and medium manufacturers and distributors. Our customers run on ERP systems, Infor Visual, Syteline, Acumatica, that have been collecting operational data for a decade or more. Every one of them has the same thing Salesforce has: years of information about what actually happened in the business, sitting in a system most of their people can't query without help. It's the same story I hear from small and medium businesses outside manufacturing too, just with a different system of record.</p>
 
-    <blockquote>The companies that will get the most out of this next wave aren't the ones with the newest model. They're the ones who already know where their data is, what it means, and what to do about what it tells them.</blockquote>
+  <p>The AI layers emerging right now, Claude reasoning over Salesforce data, agents reasoning over ERP data, aren't replacing the hard part. They're removing the last excuse for not doing it. For twenty years, the constraint on getting value out of operational data was access: you needed a report writer, a BI analyst, or a consultant who knew the schema. Now the constraint is gone. The data underneath still has to be trustworthy, structured well enough to reason over, and connected to the processes it's supposed to describe. AI didn't change that requirement. It just made the payoff for meeting it much bigger, and the cost of ignoring it much more visible.</p>
 
-    <h2>Insight, action, and speed, in that order</h2>
+  <blockquote>"The companies that will get the most out of this next wave aren't the ones with the newest model. They're the ones who already know where their data is, what it means, and what to do about what it tells them."</blockquote>
 
-    <p>Strip away the product announcements and the pattern is consistent across every serious AI deployment I've seen work, ours included: it enhances an organization's ability to do three things faster than before. Gain insight, from data that used to require a specialist to interpret. Take action, without a queue of tickets and approvals between the insight and the fix. And build the next solution, faster, because the AI layer compounds on top of the last one instead of starting from zero.</p>
+  <h2>Insight, action, and speed, in that order</h2>
 
-    <p>That's what we set out to build with InsightsAI, a conversational agent that lets people on the floor or in the office ask their ERP a plain-language question and get a real answer, and with Otto, a 24/7 AI consultant that lives inside the support portal and has actually resolved customer issues with zero engineer time involved. Neither one is impressive because it's AI. They're useful because they sit on top of data we already had, organized well enough to reason over, and they shorten the distance between a question and an action.</p>
+  <p>Strip away the product announcements and the pattern is consistent across every serious AI deployment I've seen work, ours included: it enhances an organization's ability to do three things faster than before. Gain insight, from data that used to require a specialist to interpret. Take action, without a queue of tickets and approvals between the insight and the fix. And build the next solution, faster, because the AI layer compounds on top of the last one instead of starting from zero.</p>
 
-    <p>That's the whole thesis. It was true before Claudeforce, and it will be true after whatever gets announced next quarter. The AI layer is the amplifier. The data is still the point.</p>
+  <p>That's what we set out to build with InsightsAI, a conversational agent that lets people on the floor or in the office ask their ERP a plain-language question and get a real answer, and with Otto, a 24/7 AI consultant that lives inside the support portal and has actually resolved customer issues with zero engineer time involved. Neither one is impressive because it's AI. They're useful because they sit on top of data we already had, organized well enough to reason over, and they shorten the distance between a question and an action.</p>
 
-    <p>Over the next few pieces I'm going to get specific about what this looks like for a small or medium business sitting on a decade-old system of record: where the value actually is, why most AI initiatives never show a return, and what a practical, unglamorous rollout looks like when you strip out the hype on both sides. Most of my examples come from manufacturing and distribution, because that's where I've done the work, but the pattern holds anywhere a business has been quietly collecting good data and nobody's made it easy to use.</p>
+  <p>That's the whole thesis. It was true before Claudeforce, and it will be true after whatever gets announced next quarter. The AI layer is the amplifier. The data is still the point.</p>
 
-    <div class="essay-nav">
-      <span></span>
-      <a href="the-analytics-gap.html">Next: The Analytics Gap in Small and Medium Businesses &rarr;</a>
-    </div>
-  </article>
-</div>
+  <p>Over the next few pieces I'm going to get specific about what this looks like for a small or medium business sitting on a decade-old system of record: where the value actually is, why most AI initiatives never show a return, and what a practical, unglamorous rollout looks like when you strip out the hype on both sides. Most of my examples come from manufacturing and distribution, because that's where I've done the work, but the pattern holds anywhere a business has been quietly collecting good data and nobody's made it easy to use.</p>
 
-<footer class="site">
-  <div class="wrap">
-    Brent Blackmon &middot; Wilmington, NC &middot;
-    <a href="mailto:brent.blackmon025@gmail.com">brent.blackmon025@gmail.com</a> &middot;
-    <a href="https://www.linkedin.com/in/brent-blackmon" target="_blank" rel="noopener">LinkedIn</a>
-  </div>
-</footer>
+  <div class="next-link">Next: <a href="the-analytics-gap.html">The Analytics Gap in Small and Medium Businesses &rarr;</a></div>
+  <div class="article-footer-space"></div>
+</article>
+
+<footer class="site-footer"><div class="wrap">
+  <div class="line">Now looking for the next complex, high-stakes environment where <span class="accent">data and AI can solve the problem that's actually slowing the business down.</span></div>
+  <div class="contact">Brent Blackmon<br>919.376.5147 &bull; <a href="mailto:brent.blackmon025@gmail.com">brent.blackmon025@gmail.com</a> &bull; <a href="https://www.linkedin.com/in/brent-blackmon">LinkedIn</a></div>
+</div></footer>
 
 </body>
 </html>
