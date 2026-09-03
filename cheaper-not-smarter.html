@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheaper, Not Smarter | Brent Blackmon</title>
+<meta name="description" content="A JAGGAER exec just argued that supply chain teams are benchmarking the wrong thing on AI. It's the same argument I've been making about ERP for four essays, just with a receipt attached.">
+<link rel="stylesheet" href="styles.css">
+<script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<nav class="site-nav"><div class="wrap">
+  <a class="brand" href="index.html"><span class="mark">BB</span>Brent Blackmon</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="writing/index.html" class="active">Writing</a>
+    <a href="work/index.html">Work</a>
+    <a href="about/index.html">About</a>
+  </div>
+</div></nav>
+
+<header class="article-hero"><div class="wrap">
+  <div class="kicker">Essay &middot; Part 5</div>
+  <h1>Cheaper, Not Smarter</h1>
+  <div class="meta">Brent Blackmon</div>
+</div></header>
+
+<article class="body">
+  <p>Gopinath Polavarapu, JAGGAER's Chief Digital and AI Officer, wrote something last week that most of the supply chain trade press filed under "AI opinion" and moved past. His argument: procurement teams keep comparing frontier AI models on benchmark performance when almost none of their actual work requires a frontier model to do it well. That's not a hot take. That's a receipt.</p>
+
+  <p>I've spent four essays making a version of this argument about small and medium manufacturers running on legacy ERP systems. Seeing it show up in procurement, a different discipline entirely, with a dollar figure attached, is worth stopping on. The domain changes. The mistake doesn't.</p>
+
+  <h2>Most of the work doesn't need the smartest model in the room</h2>
+
+  <p>Polavarapu's point is simple: purchase order reconciliation, compliance checks, and approval routing are rule-based, repetitive operations. What they need is consistency, throughput, and a predictable cost per transaction, not advanced reasoning. Running frontier-tier reasoning against that kind of work isn't a capability upgrade. It's a fixed cost you're paying for nothing, multiplied across every routine decision a company makes in a year.</p>
+
+  <p>That's exactly the architecture decision I made building InsightsAI and Otto. Neither one calls the most expensive model available for every question. A plain-language ERP query and a routine support ticket get handled by tools built and governed for that specific job. Anything genuinely judgment-heavy still gets routed to a person. The savings weren't a side effect. They were the design.</p>
+
+  <blockquote>"The right question was never which model is smartest. It's which model is cheapest for the job you're actually asking it to do, and whether you can prove that to an auditor."</blockquote>
+
+  <h2>Governance is the risk, not the model</h2>
+
+  <p>The sharper part of Polavarapu's piece is about the EU AI Act: penalties up to &euro;35 million or 7% of annual revenue, against a landscape where only about a quarter of organizations deploying AI have a governance framework that could survive an audit. No amount of model selection fixes that gap. It's an organizational problem wearing a technology costume, the same shape as the operating-model problem I wrote about in my last piece.</p>
+
+  <p>I chaired the AI Council at the company I most recently led strategy for precisely because of that gap. Every initiative went through the same standards before it shipped: what data it touched, who was accountable for its output, and how a decision could be traced back and explained. That discipline is what Polavarapu is calling the real differentiator now. It was already the unglamorous, mandatory part of the job before anyone gave it a name.</p>
+
+  <h2>Selective industrialization is just a name for what already works</h2>
+
+  <p>Polavarapu calls the fix "selective industrialization": frontier reasoning reserved for genuinely judgment-intensive work, strategic sourcing, risk assessment, contract analysis, running in parallel with governed, systems-of-record-native layers handling the routine execution. That's a clean way to describe an architecture that mid-market companies with a fraction of an enterprise procurement budget have been forced into by necessity, not sophistication. You don't get a frontier-everything budget running a $60 million ERP business. You get good at deciding what actually needs one.</p>
+
+  <p>The model is the amplifier. What you route to it, and what you can prove about the decision afterward, is still the point. That's been true across all five of these essays now, whether the system of record is a CRM, an ERP, or a procurement platform nobody outside the industry has heard of.</p>
+
+  <div class="next-link">More: <a href="writing/index.html">All essays &rarr;</a></div>
+  <div class="article-footer-space"></div>
+</article>
+
+<footer class="site-footer"><div class="wrap">
+  <div class="line">Now looking for the next complex, high-stakes environment where <span class="accent">data and AI can solve the problem that's actually slowing the business down.</span></div>
+  <div class="contact">Brent Blackmon<br>919.376.5147 &bull; <a href="mailto:brent.blackmon025@gmail.com">brent.blackmon025@gmail.com</a> &bull; <a href="https://www.linkedin.com/in/brent-blackmon">LinkedIn</a></div>
+</div></footer>
+
+</body>
+</html>
+
