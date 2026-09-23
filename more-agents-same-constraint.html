@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More Agents, Same Constraint | Brent Blackmon</title>
+<meta name="description" content="Deel says 8,000-plus agents now do the work of 600 employees. The mechanism is right. The number deserves more scrutiny than it got. And the foundation underneath it hasn't gone anywhere.">
+<link rel="stylesheet" href="styles.css">
+<script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<nav class="site-nav"><div class="wrap">
+<a class="brand" href="index.html"><span class="mark">BB</span>Brent Blackmon</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="writing/index.html" class="active">Writing</a>
+<a href="work/index.html">Work</a>
+<a href="about/index.html">About</a>
+</div>
+</div></nav>
+
+<header class="article-hero"><div class="wrap">
+<div class="kicker">Essay &middot; Part 7</div>
+<h1>More Agents, Same Constraint</h1>
+<div class="meta">Brent Blackmon</div>
+</div></header>
+
+<article class="body">
+<p>A post crossed my feed this week from Deel, announcing Akai, an internal automation tool built to handle repetitive work in finance, HR, accounts payable, and compliance, now packaged as a product. The claim: more than 8,000 software agents doing the daily work of roughly 600 employees, built not by writing specs but by watching people do the job, screen, voice, and system requests, and inferring a workflow from it.</p>
+
+<h2>The mechanism is the right one</h2>
+
+<p>Skip past the marketing for a second, because the underlying idea is sound, and it's the same idea I've been building on for three years. You don't get anywhere asking someone to document how they reconcile a messy transaction. You get somewhere by watching them pull unformatted wire data out of an archaic bank portal, cross-check it against invoices, and quietly fix a malformed reference nobody ever wrote down as a rule. That tacit workaround is where the real process lives, not in the process doc. An approach that captures it directly, instead of asking a human to translate it into a spec first, is going to outcompete one that doesn't.</p>
+
+<h2>The number that deserves more scrutiny than it got</h2>
+
+<p>The post also claims $140 million in new ARR added in 90 days with no new hires. No methodology, no attribution model, nothing that lets you check the number against anything. That's not a knock on the mechanism, it's a reminder that a vendor's own case study is marketing copy first and evidence second. I've spent three years refusing to put a number in front of a client or a board that I couldn't trace back to a source, and that same discipline should apply to what I read, not just what I publish.</p>
+
+<h2>What actually has to be true underneath it</h2>
+
+<p>Here's the part the post skips. Building thousands of agents that generalize a workflow from one messy transaction only works if the ledger, the PSPs, the invoice references, and the bank feeds are consistent enough that a rule learned on one case holds on the next thousand. A person doing that reconciliation by hand can use judgment to paper over an inconsistency they've seen before. An agent replicating that judgment across a fleet doesn't get to use judgment, it gets to repeat a pattern, correctly or incorrectly, at a scale no single person ever could. Data Rocket only compressed ERP migrations because we'd already standardized what "clean" looked like well enough for the tool to flag a bad pattern instead of memorizing one. Otto only handled support conversations safely because the environment data, the ticket history, and the call transcripts it drew from were already unified enough to trust. Neither product removed that foundation. Both depended on it being done first.</p>
+
+<h2>Where this leaves the argument</h2>
+
+<p>Last essay I wrote about agents running whole functions inside an operating model that was already fixed. This is the same idea taken further: agents that build the workflow themselves by watching the mess, then run it at a scale no team could ever staff by hand. The AI layer is still the amplifier. The data and process discipline underneath it are still the point, and scaling from one agent to a fleet doesn't lower that bar, it raises it. A mistake that used to cost one employee an afternoon now costs however many transactions ran through the pattern before someone noticed. The companies that get a result like Deel's already did the unglamorous work of making their systems of record trustworthy. The ones that skip straight to deploying a fleet on top of a mess get the same mess, replicated faster and cheaper than before.</p>
+
+<div class="next-link">More: <a href="writing/index.html">All essays &rarr;</a></div>
+<div class="article-footer-space"></div>
+</article>
+
+<footer class="site-footer"><div class="wrap">
+<div class="line">Now looking for the next complex, high-stakes environment where <span class="accent">data and AI can solve the problem that's actually slowing the business down.</span></div>
+<div class="contact">Brent Blackmon<br>919.376.5147 &bull; <a href="mailto:brent.blackmon025@gmail.com">brent.blackmon025@gmail.com</a> &bull; <a href="https://www.linkedin.com/in/brent-blackmon">LinkedIn</a></div>
+</div></footer>
+
+</body>
+</html>
