@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Read-Only, On Purpose | Brent Blackmon</title>
+<meta name="description" content="A finance executive built the natural-language layer his ERP vendor's AI never delivered, turned ad hoc questions into a standing control framework, and kept it read-only on purpose. Four threads from this series, in one post.">
+<meta name="author" content="Brent Blackmon">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Brent Blackmon">
+<meta property="og:title" content="Read-Only, On Purpose">
+<meta property="og:description" content="A finance executive built the natural-language layer his ERP vendor's AI never delivered, turned ad hoc questions into a standing control framework, and kept it read-only on purpose. Four threads from this series, in one post.">
+<meta property="og:image" content="https://brentblackmon.github.io/og-read-only-on-purpose.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Read-Only, On Purpose, Brent Blackmon">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="inter-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="inter-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<nav class="site-nav"><div class="wrap">
+<a class="brand" href="index.html"><span class="mark">BB</span>Brent Blackmon</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="writing/index.html" class="active">Writing</a>
+<a href="about/index.html">About</a>
+</div>
+</div></nav>
+
+<header class="article-hero"><div class="wrap">
+<div class="kicker">Essay &middot; Part 8</div>
+<h1>Read-Only, On Purpose</h1>
+<div class="meta byline"><img src="headshot.jpg" alt="" width="30" height="30"><span>Brent Blackmon</span></div>
+</div></header>
+
+<article class="body">
+<p>A post crossed my feed this week from a VP of Finance at a growth-stage technology company. His opening line: he can finally talk to his ERP using Claude.</p>
+
+<p>That's not a product announcement. It's a field report, and it happens to retrace four separate arguments this series has made, one after another, inside a single company's build.</p>
+
+<h2>The vendor still hasn't shipped it</h2>
+
+<p>He's specific about why he had to build the natural-language layer himself. His ERP vendor markets embedded AI, it didn't work for him, and his team did the backend work on their own. That's the first trait I listed in the third essay in this series: practical AI is built for the system, not bolted onto it. A feature on a vendor's roadmap isn't the same thing as an answer your finance team can use this quarter. That gap is exactly the space our conversational ERP assistant was built to fill.</p>
+
+<h2>The questions came first, the framework came after</h2>
+
+<p>He started where that assistant starts: asking the ERP a plain question in plain language, the three largest suppliers last month, bank balances over the last six months, instead of working through reports built for someone else's job. Spotting an anomaly stopped requiring a specialist. That's the access problem from the first essay in this series, solved the same way at a completely different company.</p>
+
+<p>He didn't stop there. After digging through the data, he defined a control framework, a long list of specific checks that run on demand or on their own. Data quality stops waiting on whatever the human review cadence happens to be that month. He's also clear about the risk: a framework that floods the team with alerts that turn out not to matter is just a new kind of noise. That's the same discipline I wrote about chairing the AI Council in the fifth essay: every initiative accountable for what data it touched and how a result could be traced back and explained. He built his version without a council, because the standard doesn't change based on who's enforcing it.</p>
+
+<h2>Read-only, on purpose</h2>
+
+<p>He's explicit about where he draws the line right now. Letting the model decide and post entries in the ERP, in his words, "does not seem like a career-enhancing move," at least not with the technology where it is today. It stays read-only.</p>
+
+<p>That's the same line we drew with our 24/7 support agent. We rolled it out to customers in phases as trust in it grew, and it still routes anything it can't reliably handle to a person. It's also the fourth trait from the third essay: human-controlled, not autonomous by default. Automation earns more authority in phases. It doesn't get handed the keys because the read layer worked.</p>
+
+<p>Gartner projects that by 2030, more than half of foundational ERP tasks will run autonomously. Maybe. But the companies that get there won't get there by skipping the read-only phase. They'll get there because the read layer proved, over and over, that the data underneath could be trusted with a decision.</p>
+
+<h2>Where this leaves the argument</h2>
+
+<p>Last essay was about what happens when a fleet of agents runs on top of a foundation, trustworthy or not. His post is the same argument at the scale of one finance team and one ERP: build the access yourself when the vendor's version isn't there, turn ad hoc questions into standing controls once you know what to look for, and don't hand over write access just because the read layer works. Four threads this series has spent eight essays on, all showing up in one person's actual project.</p>
+
+<p>The AI layer is the amplifier. The order you do things in, build the access, earn the trust, then decide what gets automated, is still the point. That's been true across all eight of these essays now, whether it's a trillion-dollar asset manager, a mid-market manufacturer, or one finance executive with a Claude window open next to his ERP.</p>
+<div class="author-box">
+<img src="headshot.jpg" alt="Brent Blackmon" width="76" height="76">
+<div>
+<div class="who">Brent Blackmon</div>
+<p>COO-level operating executive. Most recently I ran strategy, operations, and delivery for a PE-backed ERP software and services company, and shipped the AI tools these essays draw on. I'm looking for my next operating role.</p>
+<div class="links"><a href="about/index.html">See the experience &rarr;</a><a href="about/index.html">About me &rarr;</a><a href="mailto:brent.blackmon025@gmail.com">Email me &rarr;</a></div>
+</div>
+</div>
+
+<div class="next-link">Next: <a href="agents-need-a-manager.html">Your Agents Need a Manager &rarr;</a></div>
+<div class="article-footer-space"></div>
+</article>
+
+<footer class="site-footer"><div class="wrap">
+<div class="line">Now looking for the next complex, high-stakes environment where <span class="accent">data and AI can solve the problem that's actually slowing the business down.</span></div>
+<div class="contact">Brent Blackmon<br>919.376.5147 &bull; <a href="mailto:brent.blackmon025@gmail.com">brent.blackmon025@gmail.com</a> &bull; <a href="https://www.linkedin.com/in/brent-blackmon">LinkedIn</a></div>
+</div></footer>
+
+</body>
+</html>
