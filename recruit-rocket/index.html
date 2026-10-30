@@ -346,5 +346,17 @@ h1,h2,h3,.role,.eyebrow,.label,summary,th,td{text-wrap:balance}
 
 <footer class="wrap">Recruit Rocket is an independent product that runs on Claude. It is not made or endorsed by Anthropic. Drafts only: you review and send everything.</footer>
 
+<script>
+(function(){
+  var names=["top","middle","bottom"];
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("a[data-buy]");
+    if(!a) return;
+    var all=[].slice.call(document.querySelectorAll("a[data-buy]"));
+    var pos=names[all.indexOf(a)]||"other";
+    try{ if(window.goatcounter&&window.goatcounter.count){ window.goatcounter.count({path:"buy-click-"+pos,title:"Buy click ("+pos+")",event:true}); } }catch(err){}
+  },true);
+})();
+</script>
 </body>
 </html>
