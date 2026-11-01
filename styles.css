@@ -253,6 +253,7 @@ article.body .author-box p { font-size: 14.5px; line-height: 1.6; color: var(--g
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+.writing-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
 .writing-card {
   background: var(--cream);
   padding: 22px;
@@ -360,7 +361,7 @@ article.body td { vertical-align: top; border-bottom: 1px solid var(--border); p
 @media (max-width: 900px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
   .card-grid, .card-grid.cols-2, .card-grid.cols-4 { grid-template-columns: 1fr; }
-  .writing-grid { grid-template-columns: 1fr; }
+  .writing-grid, .writing-grid.cols-2 { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 1fr; gap: 6px; }
   h1.hero-title { font-size: 34px; }
   .hero-grid { grid-template-columns: 1fr; gap: 0; }
