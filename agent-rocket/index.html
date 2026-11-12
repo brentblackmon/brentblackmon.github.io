@@ -146,6 +146,9 @@ footer{padding-block:32px;font-size:.85rem;color:var(--gray-light);border-top:1p
 
 p,li,.why,.meta,td,th,summary,figcaption,.price-note{text-wrap:pretty}
 h1,h2,h3,.role,.eyebrow,.label,summary,th,td{text-wrap:balance}
+
+.top .brand,.top a.small{white-space:nowrap}
+@media (max-width:600px){.brand-long,.pay-long{display:none}}
 </style>
 <script src="https://gumroad.com/js/gumroad.js"></script>
 <script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -154,8 +157,8 @@ h1,h2,h3,.role,.eyebrow,.label,summary,th,td{text-wrap:balance}
 
 <div class="hero-band">
 <div class="wrap top">
-  <div class="brand"><span class="brand-mark">AR</span>Agent Rocket for Real Estate</div>
-  <a class="small" href="#buy">$99, one payment</a>
+  <div class="brand"><span class="brand-mark">AR</span><span>Agent Rocket<span class="brand-long"> for Real Estate</span></span></div>
+  <a class="small" href="#buy">$99<span class="pay-long">, one payment</span></a>
 </div>
 
 <div class="wrap hero">
