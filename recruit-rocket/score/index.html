@@ -100,6 +100,9 @@ input[type=file]{width:100%;min-width:0;font:400 15px/1.4 var(--font);background
 .flag{background:var(--yellow);border-left:4px solid var(--yellow-edge);border-radius:6px;padding:12px 14px;margin-top:12px}
 .flag b{display:block}
 .flag span{display:block;font-size:.92rem}
+.confirm{background:var(--cream);border-left:4px solid var(--gray-light);border-radius:6px;padding:12px 14px;margin-top:12px}
+.confirm b{display:block}
+.confirm span{display:block;font-size:.92rem;color:var(--gray)}
 .note{font-size:.9rem;color:var(--gray);margin-top:14px}
 
 .locked{background:var(--dark);color:var(--on-dark-1);border-radius:14px;padding:26px 22px;margin-top:28px}
@@ -224,6 +227,11 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
     <div class="cols">
       <div class="box"><h3>What you clearly have</h3><ul id="r-have"></ul></div>
       <div class="box"><h3>What's missing</h3><ul id="r-missing"></ul></div>
+    </div>
+
+    <div class="block" id="r-confirm-block" hidden>
+      <h3>One thing to confirm</h3>
+      <div id="r-confirm"></div>
     </div>
 
     <div class="block" id="r-keywords-block">
@@ -410,6 +418,15 @@ var CONFIG = {
     (d.missing || []).forEach(function(m){ var li = el("li"); li.appendChild(el("b", m.text)); li.appendChild(el("span", m.why)); miss.appendChild(li); });
     if(!miss.children.length){ var ok = el("li"); ok.appendChild(el("span", "Nothing. Your resume shows everything we checked.")); miss.appendChild(ok); }
 
+    var cf = $("r-confirm"); cf.textContent = "";
+    (d.confirm || []).forEach(function(c){
+      var box = el("div", null, "confirm");
+      box.appendChild(el("b", c.text));
+      box.appendChild(el("span", c.ask));
+      cf.appendChild(box);
+    });
+    $("r-confirm-block").hidden = !cf.children.length;
+
     var kw = $("r-keywords"); kw.textContent = "";
     (d.keywords || []).forEach(function(k){ kw.appendChild(el("span", k, "chip")); });
     $("r-keywords-block").hidden = !kw.children.length;
@@ -427,7 +444,7 @@ var CONFIG = {
     // The score shows now. The signal box fills in when the search lands.
     $("r-rows").textContent = "";
     $("r-more").hidden = true;
-    $("r-signal-head").textContent = "Companies about to hire, near you";
+    $("r-signal-head").textContent = "Companies about to hire";
     $("r-signal-note").textContent = "";
     $("r-finding").hidden = false;
     show("results");
@@ -441,14 +458,16 @@ var CONFIG = {
     var rows = $("r-rows"); rows.textContent = "";
     $("r-more").hidden = true;
     $("r-finding").hidden = true;
+    // "near you" for a metro search. For a country-wide search, name the country that was searched.
+    var where = s.scope === "country" ? (s.place ? "in " + s.place : "across the country") : "near you";
     if(s.status !== "ok"){
       $("r-signal-head").textContent = "We could not run the hiring signal search just now.";
       $("r-signal-note").textContent = "So there is no count to show. Recruit Rocket runs this scan for you every morning.";
     } else if(!s.count){
-      $("r-signal-head").textContent = "We found 0 companies showing dated hiring signals for this kind of role near you.";
+      $("r-signal-head").textContent = "We found 0 companies showing dated hiring signals for this kind of role " + where + ".";
       $("r-signal-note").textContent = "That is the honest count for the last 90 days. It changes every week. Recruit Rocket runs the scan every morning, so you hear about the next one first.";
     } else {
-      $("r-signal-head").textContent = "We found " + s.count + (s.count === 1 ? " company" : " companies") + " showing hiring signals for this kind of role near you.";
+      $("r-signal-head").textContent = "We found " + s.count + (s.count === 1 ? " company" : " companies") + " showing hiring signals for this kind of role " + where + ".";
       $("r-signal-note").textContent = s.count < 3
         ? "That is the honest count for the last 90 days. The names, the people to contact and the sources are locked. Recruit Rocket runs the scan every morning, so you hear about the next one first."
         : "The names, the people to contact and the sources are locked.";
