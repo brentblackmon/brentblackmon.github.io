@@ -78,6 +78,9 @@ input[type=file]{width:100%;min-width:0;font:400 15px/1.4 var(--font);background
 .progress .line.done{color:var(--gray)}
 .progress .line.done .dot{background:var(--green);border-color:var(--green)}
 @keyframes spin{to{transform:rotate(360deg)}}
+.still{margin-top:16px;font-weight:600;color:var(--gray)}
+.finding{display:flex;gap:12px;align-items:center;margin-top:16px;font-weight:600;color:var(--on-dark-2)}
+.finding .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--red);border-top-color:transparent;flex:none;animation:spin .9s linear infinite}
 
 .score-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
 .score-num{font:800 clamp(3.4rem,14vw,5rem)/1 var(--font);letter-spacing:-2px;color:var(--red)}
@@ -122,7 +125,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
   .score-head{grid-template-columns:1fr;gap:10px}
   .btn{width:100%}
 }
-@media (prefers-reduced-motion: reduce){ .btn{transition:none} .btn:hover{transform:none} .progress .line.on .dot{animation:none} }
+@media (prefers-reduced-motion: reduce){ .btn{transition:none} .btn:hover{transform:none} .progress .line.on .dot{animation:none} .finding .dot{animation:none} }
 </style>
 <script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -169,7 +172,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <span class="hint">On LinkedIn: open your profile, click Resources (or More), then Save to PDF. Takes 10 seconds.</span>
       <span class="or">or</span>
       <textarea id="linkedin-text" placeholder="Paste your profile text" aria-label="Paste your profile text"></textarea>
-      <span class="hint">PDF up to 1 MB, or pasted text up to 30,000 characters.</span>
+      <span class="hint">PDF up to 500 KB, or pasted text up to 30,000 characters.</span>
     </div>
 
     <div class="field">
@@ -203,6 +206,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <div class="line"><span class="dot"></span>Comparing your resume and LinkedIn</div>
       <div class="line"><span class="dot"></span>Looking for companies about to hire</div>
     </div>
+    <p class="still" id="still" hidden>Still working. Checking recent company news...</p>
   </div>
 
   <!-- Screen 2: the results -->
@@ -235,6 +239,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
     <div class="locked">
       <div class="eyebrow"><span class="red">Shift left</span> &middot; before the job is posted</div>
       <h2 id="r-signal-head"></h2>
+      <div class="finding" id="r-finding" hidden><span class="dot"></span>Finding companies about to hire...</div>
       <div class="rows" id="r-rows"></div>
       <div class="more" id="r-more" hidden></div>
       <p class="muted" id="r-signal-note"></p>
@@ -271,11 +276,12 @@ var CONFIG = {
 
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var LIMIT = { pdf: 1048576, docx: 512000, posting: 20000, profile: 30000 };
-  var TYPES = { new_leader: "New leader", funding: "Funding or PE investment", acquisition: "Acquisition", expansion: "Expansion", leader_departure: "Leader departure" };
+  var LIMIT = { pdf: 1048576, docx: 512000, profilePdf: 512000, posting: 20000, profile: 30000 };
+  var BASE = String(CONFIG.WORKER_URL || "").replace(/\/+$/, "");
+  var TYPES = { new_leader: "New leader", funding: "Funding or PE investment", acquisition: "Acquisition", expansion: "Expansion", leader_departure: "Leader departure", ipo: "IPO", contract_win: "Major contract win", hiring: "Hiring announcement" };
   var FIELDS = { title: "Job title", dates: "Dates", employer: "Employer", degree: "Degree" };
   var ready = !!(CONFIG.WORKER_URL && CONFIG.TURNSTILE_SITE_KEY);
-  var widget = null, token = "", timers = [];
+  var widget = null, token = "", timers = [], poll = null;
 
   function count(path, title){
     try{ if(window.goatcounter && window.goatcounter.count){ window.goatcounter.count({path: path, title: title, event: true}); } }catch(err){}
@@ -321,11 +327,17 @@ var CONFIG = {
     return "";
   }
 
+  // The steps keep moving. After 15 seconds with nothing back, a "still working" line shows.
   function progress(){
     var lines = [].slice.call(document.querySelectorAll("#working .line"));
     function step(i){ lines.forEach(function(l, k){ l.className = "line" + (k < i ? " done" : k === i ? " on" : ""); }); }
+    $("still").hidden = true;
     step(0);
-    timers = [setTimeout(function(){ step(1); }, 7000), setTimeout(function(){ step(2); }, 26000)];
+    timers = [
+      setTimeout(function(){ step(1); }, 4000),
+      setTimeout(function(){ step(2); }, 10000),
+      setTimeout(function(){ $("still").hidden = false; }, 15000)
+    ];
   }
   function stopProgress(){ timers.forEach(clearTimeout); timers = []; }
 
@@ -349,7 +361,7 @@ var CONFIG = {
     if(resume.size > LIMIT[rk]) return showError(rk === "pdf" ? "That resume PDF is over 1 MB. Save a smaller copy and try again." : "That Word file is over 500 KB. Save it as a PDF and try again.");
     if(!liFile && !liText) return showError("Add your LinkedIn profile: upload the PDF or paste the text.");
     if(liFile && kind(liFile) !== "pdf") return showError("Your LinkedIn profile file needs to be a PDF.");
-    if(liFile && liFile.size > LIMIT.pdf) return showError("That LinkedIn PDF is over 1 MB. Paste the profile text instead.");
+    if(liFile && liFile.size > LIMIT.profilePdf) return showError("That LinkedIn PDF is over 500 KB. Paste the profile text instead.");
     if(!liFile && liText.length < 200) return showError("That LinkedIn text is too short. Paste your whole profile, or upload the PDF.");
     if(!liFile && liText.length > LIMIT.profile) return showError("That LinkedIn text is too long. The limit is 30,000 characters.");
     if(where.length < 2) return showError("Add your city and country, or remote.");
@@ -366,10 +378,10 @@ var CONFIG = {
         resume_type: rk, linkedin_type: liFile ? "pdf" : "text", linkedin_text: liFile ? "" : liText,
         location: where, email: email, consent: $("consent").checked, turnstile: token
       };
-      return fetch(CONFIG.WORKER_URL, { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(meta) + "\n" + files[0] + "\n" + files[1] });
+      return fetch(BASE + "/score", { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(meta) + "\n" + files[0] + "\n" + files[1] });
     }).then(function(res){ return res.json(); }).then(function(data){
       stopProgress();
-      if(data && data.ok){ render(data); count("score-shown", "Score shown"); return; }
+      if(data && data.ok){ render(data); count("score-shown", "Score shown"); if(data.signals_token) watchSignals(data.signals_token); else if(!data.signals) signals(null); return; }
       show("form"); resetCheck();
       showError((data && data.message) || "Scoring is not available right now. Please try again later.");
       if(data && data.code === "paste_posting"){ $("posting-url").value = ""; $("posting-text").focus(); }
@@ -412,9 +424,23 @@ var CONFIG = {
     });
     $("r-flags-block").hidden = !fl.children.length;
 
-    var s = d.signals || { status: "unavailable", count: 0, rows: [], more: 0 };
+    // The score shows now. The signal box fills in when the search lands.
+    $("r-rows").textContent = "";
+    $("r-more").hidden = true;
+    $("r-signal-head").textContent = "Companies about to hire, near you";
+    $("r-signal-note").textContent = "";
+    $("r-finding").hidden = false;
+    show("results");
+    if(d.signals) signals(d.signals);
+  }
+
+  // Fills in the signal box. s is null when the search could not be run.
+  function signals(s){
+    if(poll){ clearTimeout(poll); poll = null; }
+    s = s || { status: "unavailable", count: 0, rows: [], more: 0 };
     var rows = $("r-rows"); rows.textContent = "";
     $("r-more").hidden = true;
+    $("r-finding").hidden = true;
     if(s.status !== "ok"){
       $("r-signal-head").textContent = "We could not run the hiring signal search just now.";
       $("r-signal-note").textContent = "So there is no count to show. Recruit Rocket runs this scan for you every morning.";
@@ -423,21 +449,41 @@ var CONFIG = {
       $("r-signal-note").textContent = "That is the honest count for the last 90 days. It changes every week. Recruit Rocket runs the scan every morning, so you hear about the next one first.";
     } else {
       $("r-signal-head").textContent = "We found " + s.count + (s.count === 1 ? " company" : " companies") + " showing hiring signals for this kind of role near you.";
-      $("r-signal-note").textContent = "The names, the people to contact and the sources are locked.";
+      $("r-signal-note").textContent = s.count < 3
+        ? "That is the honest count for the last 90 days. The names, the people to contact and the sources are locked. Recruit Rocket runs the scan every morning, so you hear about the next one first."
+        : "The names, the people to contact and the sources are locked.";
       (s.rows || []).forEach(function(x){
         var row = el("div", null, "row");
-        var bolt = el("div", "⚡", "bolt"); bolt.setAttribute("aria-hidden", "true");
+        var bolt = el("div", "\u26A1", "bolt"); bolt.setAttribute("aria-hidden", "true");
         row.appendChild(bolt);
-        row.appendChild(el("b", (TYPES[x.type] || "Signal") + " · " + day(x.date)));
+        row.appendChild(el("b", (TYPES[x.type] || "Signal") + " \u00B7 " + day(x.date)));
         var name = el("span", "Company name locked", "hidden-name"); name.setAttribute("aria-label", "Company name locked");
         row.appendChild(name);
         rows.appendChild(row);
       });
       if(s.more > 0){ $("r-more").textContent = "+ " + s.more + " more"; $("r-more").hidden = false; }
     }
-    show("results");
   }
-  window.__rrRender = render;   // used by the page tests
+
+  // Asks the worker for the signal count every 2 seconds until it lands, for up to 75 seconds.
+  function watchSignals(tok){
+    var began = Date.now();
+    function ask(){
+      fetch(BASE + "/signals?token=" + encodeURIComponent(tok)).then(function(res){ return res.json(); }).then(function(data){
+        if(data && data.ok && data.status === "pending"){
+          if(Date.now() - began > 75000) return signals(null);
+          poll = setTimeout(ask, 2000);
+          return;
+        }
+        signals(data && data.ok ? data : null);
+      }).catch(function(){
+        if(Date.now() - began > 75000) return signals(null);
+        poll = setTimeout(ask, 3000);
+      });
+    }
+    poll = setTimeout(ask, 1500);
+  }
+  window.__rrRender = render; window.__rrSignals = signals;   // used by the page tests
 
   $("unlock").addEventListener("click", function(){ count("unlock-click", "Unlock click"); });
 })();
