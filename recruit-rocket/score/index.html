@@ -128,6 +128,27 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
   .score-head{grid-template-columns:1fr;gap:10px}
   .btn{width:100%}
 }
+.tip{background:var(--yellow);border-left:4px solid var(--yellow-edge);border-radius:6px;padding:10px 12px;font-size:.92rem;font-weight:600}
+.save{display:grid;gap:8px;justify-items:start;margin-top:18px}
+.print-only{display:none}
+/* Save my results: a plain printout of the score, both lists, the missing words, the signal count, the code and the address. */
+@media print{
+  .hero-band,#form,#working,.btn,.save,footer,#r-finding,.hidden-name,.bolt{display:none!important}
+  .print-only{display:block}
+  .print-title{font-weight:800;font-size:1.1rem;margin-bottom:12px}
+  body{font-size:12pt;background:#fff;color:#000}
+  main{padding:0}
+  .card{border:0;box-shadow:none;margin:0;padding:0}
+  .box,.chip,.flag,.confirm{background:#fff;border:1px solid #999}
+  .box{border-top:2px solid #000}
+  .score-num{color:#000}
+  .band{color:#000;background:#fff!important;border:1px solid #000}
+  .locked{background:#fff;color:#000;padding:0;border-radius:0}
+  .locked h2,.locked p.muted,.locked ul,.locked .eyebrow,.locked .eyebrow .red,.more,.row b{color:#000}
+  .row{background:#fff;border:1px solid #999;grid-template-columns:1fr}
+  .code{color:#000;border-color:#000}
+  .cols{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion: reduce){ .btn{transition:none} .btn:hover{transform:none} .progress .line.on .dot{animation:none} .finding .dot{animation:none} }
 </style>
 <script data-goatcounter="https://brentblackmon.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -156,9 +177,10 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <span class="num">Step 1</span>
       <label class="name" for="posting-url">The job posting</label>
       <input type="url" id="posting-url" inputmode="url" placeholder="Link to the posting" autocomplete="off">
+      <span class="tip" id="posting-note" role="status" hidden>LinkedIn jobs need the text, not the link. On the job, select everything under "About the job", copy it, and paste it below.</span>
       <span class="or">or</span>
       <textarea id="posting-text" placeholder="Paste the posting text" aria-label="Paste the posting text"></textarea>
-      <span class="hint">A link or pasted text. For a LinkedIn job, paste the text. Up to 20,000 characters.</span>
+      <span class="hint">Most job links work. For LinkedIn, paste the job text.</span>
     </div>
 
     <div class="field">
@@ -170,11 +192,13 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
 
     <div class="field">
       <span class="num">Step 3</span>
-      <label class="name" for="linkedin-file">Your LinkedIn profile</label>
+      <label class="name" for="linkedin-file">Your LinkedIn profile (optional)</label>
+      <span class="hint">Adding it sharpens your score and your hiring signal search, checks that your resume and LinkedIn match, and gets you better tips.</span>
       <input type="file" id="linkedin-file" accept=".pdf,application/pdf">
       <span class="hint">On LinkedIn: open your profile, click Resources (or More), then Save to PDF. Takes 10 seconds.</span>
       <span class="or">or</span>
       <textarea id="linkedin-text" placeholder="Paste your profile text" aria-label="Paste your profile text"></textarea>
+      <span class="tip" id="linkedin-note" role="status" hidden>We can't read LinkedIn links. Save your profile as a PDF, or skip this step.</span>
       <span class="hint">PDF up to 500 KB, or pasted text up to 30,000 characters.</span>
     </div>
 
@@ -188,7 +212,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <span class="num">Step 5</span>
       <label class="name" for="email">Your email</label>
       <input type="email" id="email" placeholder="you@example.com" autocomplete="email" maxlength="254">
-      <label class="check"><input type="checkbox" id="consent"><span>Send me my results and job search tips.</span></label>
+      <label class="check"><input type="checkbox" id="consent"><span>Email me job search tips from Brent.</span></label>
       <span class="hint">One free score per email.</span>
     </div>
 
@@ -214,6 +238,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
 
   <!-- Screen 2: the results -->
   <div class="card" id="results" hidden>
+    <p class="print-only print-title">Recruit Rocket Free Match Score</p>
     <div class="score-head">
       <div class="score-num"><span id="r-score"></span><small>of 100</small></div>
       <div>
@@ -221,6 +246,10 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
         <div class="role" id="r-role"></div>
         <p class="verdict" id="r-verdict"></p>
       </div>
+    </div>
+    <div class="save">
+      <button class="btn" type="button" id="save">Save my results</button>
+      <p class="fine">Your results aren't emailed. Save them now.</p>
     </div>
     <p class="note" id="r-ai" hidden>This posting has hidden text aimed at AI. We ignored it.</p>
 
@@ -238,6 +267,8 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <h3>Words the posting uses that your resume doesn't</h3>
       <div class="chips" id="r-keywords"></div>
     </div>
+
+    <p class="note" id="r-nolinkedin" hidden>Resume and LinkedIn check: add your LinkedIn to see where they disagree. Recruit Rocket checks this on every resume it builds.</p>
 
     <div class="block" id="r-flags-block">
       <h3>Your resume and LinkedIn don't match</h3>
@@ -260,6 +291,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
       <div class="unlock">
         <p>Use code <span class="code">SCORE5</span> for $5 off.</p>
         <a class="btn" id="unlock" href="https://brentblackmon.github.io/recruit-rocket/?campaign=score-unlock">Unlock with Recruit Rocket</a>
+        <p class="print-only">Recruit Rocket: https://brentblackmon.github.io/recruit-rocket/</p>
       </div>
     </div>
   </div>
@@ -289,7 +321,7 @@ var CONFIG = {
   var TYPES = { new_leader: "New leader", funding: "Funding or PE investment", acquisition: "Acquisition", expansion: "Expansion", leader_departure: "Leader departure", ipo: "IPO", contract_win: "Major contract win", hiring: "Hiring announcement" };
   var FIELDS = { title: "Job title", dates: "Dates", employer: "Employer", degree: "Degree" };
   var ready = !!(CONFIG.WORKER_URL && CONFIG.TURNSTILE_SITE_KEY);
-  var widget = null, token = "", timers = [], poll = null;
+  var widget = null, token = "", timers = [], poll = null, sentLinkedin = true;
 
   function count(path, title){
     try{ if(window.goatcounter && window.goatcounter.count){ window.goatcounter.count({path: path, title: title, event: true}); } }catch(err){}
@@ -349,13 +381,35 @@ var CONFIG = {
   }
   function stopProgress(){ timers.forEach(clearTimeout); timers = []; }
 
+  // A LinkedIn job link is caught before submit: show the note, clear the box, move to the paste box.
+  function catchLinkedInJob(){
+    var box = $("posting-url");
+    if(!/linkedin\.com|lnkd\.in/i.test(box.value)) return;
+    $("posting-note").hidden = false;
+    box.value = "";
+    $("posting-text").focus();
+  }
+  ["input", "change", "blur"].forEach(function(ev){ $("posting-url").addEventListener(ev, catchLinkedInJob); });
+  $("posting-url").addEventListener("paste", function(){ setTimeout(catchLinkedInJob, 0); });
+
+  // A LinkedIn profile link in the paste box is not profile text.
+  function profileLink(){
+    var v = $("linkedin-text").value.trim();
+    return v.length < 200 && /linkedin\.com\/in\//i.test(v);
+  }
+  function checkProfileLink(){ $("linkedin-note").hidden = !profileLink(); }
+  ["input", "change", "blur"].forEach(function(ev){ $("linkedin-text").addEventListener(ev, checkProfileLink); });
+
+  $("save").addEventListener("click", function(){ window.print(); });
+
   $("form").addEventListener("submit", function(e){
     e.preventDefault();
     $("error").hidden = true;
     if(!ready) return;
 
     var link = $("posting-url").value.trim(), pasted = $("posting-text").value.trim();
-    var resume = $("resume").files[0], liFile = $("linkedin-file").files[0], liText = $("linkedin-text").value.trim();
+    var resume = $("resume").files[0], liFile = $("linkedin-file").files[0], liText = profileLink() ? "" : $("linkedin-text").value.trim();
+    checkProfileLink();
     var where = $("location").value.trim(), email = $("email").value.trim();
 
     if(!link && !pasted) return showError("Add the job posting: a link or the pasted text.");
@@ -367,10 +421,9 @@ var CONFIG = {
     var rk = kind(resume);
     if(!rk) return showError("Your resume needs to be a PDF or a Word (.docx) file. Older .doc files do not work. Save it as a PDF.");
     if(resume.size > LIMIT[rk]) return showError(rk === "pdf" ? "That resume PDF is over 1 MB. Save a smaller copy and try again." : "That Word file is over 500 KB. Save it as a PDF and try again.");
-    if(!liFile && !liText) return showError("Add your LinkedIn profile: upload the PDF or paste the text.");
     if(liFile && kind(liFile) !== "pdf") return showError("Your LinkedIn profile file needs to be a PDF.");
     if(liFile && liFile.size > LIMIT.profilePdf) return showError("That LinkedIn PDF is over 500 KB. Paste the profile text instead.");
-    if(!liFile && liText.length < 200) return showError("That LinkedIn text is too short. Paste your whole profile, or upload the PDF.");
+    if(!liFile && liText && liText.length < 200) return showError("That LinkedIn text is too short. Paste your whole profile, or upload the PDF.");
     if(!liFile && liText.length > LIMIT.profile) return showError("That LinkedIn text is too long. The limit is 30,000 characters.");
     if(where.length < 2) return showError("Add your city and country, or remote.");
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError("Enter a valid email address.");
@@ -381,9 +434,10 @@ var CONFIG = {
     progress();
 
     Promise.all([base64(resume), liFile ? base64(liFile) : Promise.resolve("")]).then(function(files){
+      sentLinkedin = !!(liFile || liText);
       var meta = {
         posting_url: pasted ? "" : link, posting_text: pasted,
-        resume_type: rk, linkedin_type: liFile ? "pdf" : "text", linkedin_text: liFile ? "" : liText,
+        resume_type: rk, linkedin_type: liFile ? "pdf" : liText ? "text" : "none", linkedin_text: liFile ? "" : liText,
         location: where, email: email, consent: $("consent").checked, turnstile: token
       };
       return fetch(BASE + "/score", { method: "POST", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(meta) + "\n" + files[0] + "\n" + files[1] });
@@ -439,7 +493,10 @@ var CONFIG = {
       box.appendChild(el("span", "LinkedIn: " + f.linkedin));
       fl.appendChild(box);
     });
-    $("r-flags-block").hidden = !fl.children.length;
+    // With no LinkedIn profile there is nothing to compare, so one line says what the check would add.
+    var checked = typeof d.linkedin_checked === "boolean" ? d.linkedin_checked : sentLinkedin;
+    $("r-flags-block").hidden = !checked || !fl.children.length;
+    $("r-nolinkedin").hidden = checked;
 
     // The score shows now. The signal box fills in when the search lands.
     $("r-rows").textContent = "";
