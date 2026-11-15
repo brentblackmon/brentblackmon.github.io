@@ -120,6 +120,7 @@ input[type=file]{width:100%;min-width:0;font:400 15px/1.4 var(--font);background
 .locked li + li{margin-top:6px}
 .code{display:inline-block;border:2px dashed var(--red);border-radius:10px;padding:8px 14px;font:800 1.1rem/1 var(--font);letter-spacing:.08em;color:#fff;margin-inline:2px}
 .unlock{display:grid;gap:16px;justify-items:start;margin-top:22px}
+.more-link{font-size:.9rem;color:var(--on-dark-2)}
 
 footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1px solid var(--border)}
 @media (max-width:620px){
@@ -133,7 +134,7 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
 .print-only{display:none}
 /* Save my results: a plain printout of the score, both lists, the missing words, the signal count, the code and the address. */
 @media print{
-  .hero-band,#form,#working,.btn,.save,footer,#r-finding,.hidden-name,.bolt{display:none!important}
+  .hero-band,#form,#working,.btn,.save,footer,#r-finding,.hidden-name,.bolt,.more-link{display:none!important}
   .print-only{display:block}
   .print-title{font-weight:800;font-size:1.1rem;margin-bottom:12px}
   body{font-size:12pt;background:#fff;color:#000}
@@ -289,8 +290,9 @@ footer{padding-block:28px;font-size:.85rem;color:var(--gray-light);border-top:1p
         <li>It runs the scan every morning. You review everything. You hit send.</li>
       </ul>
       <div class="unlock">
-        <p>Use code <span class="code">SCORE5</span> for $5 off.</p>
-        <a class="btn" id="unlock" href="https://brentblackmon.github.io/recruit-rocket/?campaign=score-unlock">Unlock with Recruit Rocket</a>
+        <p>Your $5 discount is applied at checkout.</p>
+        <a class="btn" id="unlock" href="https://blackmon1.gumroad.com/l/recruit-rocket/SCORE5">Unlock Recruit Rocket ($5 off)</a>
+        <a class="more-link" id="see-all" href="https://brentblackmon.github.io/recruit-rocket/?campaign=score-unlock">See everything it does</a>
         <p class="print-only">Recruit Rocket: https://brentblackmon.github.io/recruit-rocket/</p>
       </div>
     </div>
@@ -389,7 +391,8 @@ var CONFIG = {
     box.value = "";
     $("posting-text").focus();
   }
-  ["input", "change", "blur"].forEach(function(ev){ $("posting-url").addEventListener(ev, catchLinkedInJob); });
+  // Checked on paste and when the person leaves the box, never on each keystroke.
+  $("posting-url").addEventListener("blur", catchLinkedInJob);
   $("posting-url").addEventListener("paste", function(){ setTimeout(catchLinkedInJob, 0); });
 
   // A LinkedIn profile link in the paste box is not profile text.
