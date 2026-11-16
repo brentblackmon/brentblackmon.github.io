@@ -468,7 +468,7 @@ var CONFIG = {
     $("r-ai").hidden = !d.aimed_at_ai;
 
     var have = $("r-have"); have.textContent = "";
-    (d.have || []).forEach(function(h){ var li = el("li"); li.appendChild(el("b", h.text)); if(h.quote) li.appendChild(el("span", "Your resume: \"" + h.quote + "\"")); have.appendChild(li); });
+    (d.have || []).forEach(function(h){ var li = el("li"); li.appendChild(el("b", h.text)); if(h.quote) li.appendChild(el("span", (d.linkedin_checked ? "From your resume or LinkedIn: \"" : "Your resume: \"") + h.quote + "\"")); have.appendChild(li); });
     if(!have.children.length){ var none = el("li"); none.appendChild(el("span", "Nothing the posting asks for is shown plainly yet.")); have.appendChild(none); }
 
     var miss = $("r-missing"); miss.textContent = "";
